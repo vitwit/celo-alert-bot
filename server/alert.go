@@ -3,8 +3,8 @@ package server
 import (
 	"log"
 
-	"github.com/PrathyushaLakkireddy/celo-alert-bot/alerting"
-	"github.com/PrathyushaLakkireddy/celo-alert-bot/config"
+	"github.com/vitwit/celo-alert-bot/alerting"
+	"github.com/vitwit/celo-alert-bot/config"
 )
 
 // SendTelegramAlert sends the alert to telegram chat

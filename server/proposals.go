@@ -1,14 +1,14 @@
 package server
 
 import (
-	"log"
-	"fmt"
 	"encoding/json"
+	"fmt"
+	"log"
 	"strconv"
 
 	client "github.com/influxdata/influxdb1-client/v2"
 
-	"github.com/PrathyushaLakkireddy/celo-alert-bot/config"
+	"github.com/vitwit/celo-alert-bot/config"
 )
 
 // NewProposalAlert alerts for a new proposal
@@ -46,7 +46,7 @@ func NewProposalAlert(cfg *config.Config, c client.Client) error {
 	var lengthOfProposals string
 
 	q := client.NewQuery(fmt.Sprintf("SELECT * FROM celo_proposals"), cfg.InfluxDB.Database, "")
-		if response, err := c.Query(q); err == nil && response.Error() == nil {
+	if response, err := c.Query(q); err == nil && response.Error() == nil {
 		for _, r := range response.Results {
 			if len(r.Series) != 0 {
 				n := len(r.Series[0].Values)
@@ -60,7 +60,7 @@ func NewProposalAlert(cfg *config.Config, c client.Client) error {
 	l, _ := strconv.Atoi(lengthOfProposals)
 
 	if l != length {
-		_ = writeToInfluxDb(c, bp, "celo_proposals", map[string]string{}, map[string]interface{}{"proposal_id": id, "length":length})
+		_ = writeToInfluxDb(c, bp, "celo_proposals", map[string]string{}, map[string]interface{}{"proposal_id": id, "length": length})
 		_ = SendTelegramAlert(fmt.Sprintf("A new roposal with proposal id = %s has been added", id), cfg)
 		_ = SendEmailAlert(fmt.Sprintf("A new proposal with proposal id = %s has been added", id), cfg)
 		log.Println("Sent new proposal alerting")

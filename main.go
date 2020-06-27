@@ -8,8 +8,8 @@ import (
 
 	client "github.com/influxdata/influxdb1-client/v2"
 
-	"github.com/PrathyushaLakkireddy/celo-alert-bot/config"
-	"github.com/PrathyushaLakkireddy/celo-alert-bot/server"
+	"github.com/vitwit/celo-alert-bot/config"
+	"github.com/vitwit/celo-alert-bot/server"
 )
 
 func main() {
@@ -34,7 +34,7 @@ func main() {
 	// Calling go routine to send alerts of new proposals
 	go func() {
 		for {
-			if err := server.NewProposalAlert(cfg,c); err != nil {
+			if err := server.NewProposalAlert(cfg, c); err != nil {
 				fmt.Println("Error while sending new proposal alert", err)
 			}
 			time.Sleep(3 * time.Second)
